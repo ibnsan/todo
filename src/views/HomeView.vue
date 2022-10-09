@@ -3,16 +3,12 @@
     <div class="mx-auto lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0">
       <h2 class=" mx-auto text-gray-900 text-lg font-medium title-font mb-5">Create your to-do list</h2>
       <div class="relative mb-4">
-        <input v-model="title" type="text" placeholder="Title" name="Title"
-               class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+        <todo-input v-model="title" placeholder="Title"/>
       </div>
       <div class="relative mb-4">
-        <textarea v-model="description" placeholder="Description" name="description"
-                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+        <todo-textarea v-model="description" placeholder="Description"/>
       </div>
-      <button class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-              @click="createNewToDo">Create
-      </button>
+      <todo-button @click="createNewToDo">Create</todo-button>
     </div>
 
     <div class="mx-auto lg:w-2/6 w-full">
@@ -25,8 +21,12 @@
 </template>
 
 <script>
+import TodoButton from "@/components/UI/buttons/TodoButton";
+import TodoInput from "@/components/UI/inputs/TodoInput";
+import TodoTextarea from "@/components/UI/TodoTextarea";
 export default {
   name: 'Create your to-do list',
+  components: {TodoTextarea, TodoInput, TodoButton},
   data() {
     return {
       title: '',
