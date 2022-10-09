@@ -1,7 +1,21 @@
 <template>
   <div>
+
     <div class="mx-auto lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0">
-      <h2 class=" mx-auto text-gray-900 text-lg font-medium title-font mb-5">Create your to-do list</h2>
+      <h2 class=" mx-auto text-gray-900 text-lg font-medium title-font mb-5">Choose the project</h2>
+      <div class="relative mb-4">
+        <todo-select v-model="projectName" :options="projectList" />
+        {{projectName}}
+      </div>
+      <h2 class=" mx-auto text-gray-900 text-lg font-medium title-font mb-5">Or create a new project</h2>
+
+      <div class="relative mb-4">
+        <todo-input v-model="projectName" placeholder="Project name"/>
+      </div>
+        <todo-button @click="createNewProject">Create</todo-button>
+
+
+      <h2 class="mx-auto text-gray-900 text-lg font-medium title-font mb-5">Create your to-do list</h2>
       <div class="relative mb-4">
         <todo-input v-model="title" placeholder="Title"/>
       </div>
@@ -24,29 +38,37 @@
 import TodoButton from "@/components/UI/buttons/TodoButton";
 import TodoInput from "@/components/UI/inputs/TodoInput";
 import TodoTextarea from "@/components/UI/TodoTextarea";
+import TodoSelect from "@/components/UI/TodoSelect";
 export default {
   name: 'Create your to-do list',
-  components: {TodoTextarea, TodoInput, TodoButton},
+  components: {TodoSelect, TodoTextarea, TodoInput, TodoButton},
   data() {
     return {
       title: '',
       description: '',
-      todoList: []
+      projectName: '',
+      todoList: [],
+      projectList: [],
     }
   },
   methods: {
     createNewToDo() {
       if (this.title.length >= 3 && this.description.length >= 3) {
-        let test = {id: Date.now(), title: this.title, description: this.description}
-        this.todoList.push(test);
+        this.todoList.push({id: Date.now(), title: this.title, description: this.description});
         localStorage.setItem('todoList', JSON.stringify(this.todoList));
+      }
+    },
+    createNewProject() {
+      if (this.projectName.length >= 3) {
+        this.projectList.push({id: Date.now(), name: this.projectName, value: this.projectName});
+        localStorage.setItem('projectList', JSON.stringify(this.projectList));
       }
     }
   },
   mounted() {
-    const currentTodoList = JSON.parse(localStorage.getItem('todoList'));
-    if (currentTodoList && Array.isArray(currentTodoList)) {
-      this.todoList = currentTodoList;
+    const currentProjectList = JSON.parse(localStorage.getItem('projectList'));
+    if (currentProjectList && Array.isArray(currentProjectList)) {
+      this.projectList = currentProjectList;
     }
   }
 }
