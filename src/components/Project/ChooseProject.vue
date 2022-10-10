@@ -1,5 +1,4 @@
 <template>
-  <h2 class=" mx-auto text-gray-900 text-lg font-medium title-font mb-5">Choose the project</h2>
   <div class="relative mb-4">
     <todo-select v-model="projectName" @update:model-value="setSelectedValue" :options="projectList" />
   </div>
@@ -24,7 +23,7 @@ export default {
   },
   methods: {
     setSelectedValue() {
-      this.$emit('select', this.projectName);
+      this.$emit('selectedProject', this.projectName);
     }
   }
 }
