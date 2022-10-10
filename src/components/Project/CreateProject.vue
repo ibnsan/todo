@@ -8,6 +8,7 @@
 <script>
 export default {
   name: 'create-project',
+  emits: ["savedProjects"],
   props: {
     projectList: {
       type: Array,
